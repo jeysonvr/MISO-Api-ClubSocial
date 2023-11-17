@@ -21,5 +21,5 @@ export class ClubEntity {
 
   @ManyToMany(() => PartnerEntity, partner => partner.clubs)
   @JoinTable()
-  partners: PartnerEntity[];
+  partners?: PartnerEntity[];
 }
