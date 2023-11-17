@@ -1,6 +1,6 @@
 import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-import { SocioEntity } from '../socio/socio.entity';
+import { PartnerEntity } from '../partner/partner.entity';
 
 @Entity()
 export class ClubEntity {
@@ -19,7 +19,7 @@ export class ClubEntity {
   @Column()
   description: string;
 
-  @ManyToMany(() => SocioEntity, socio => socio.clubs)
+  @ManyToMany(() => PartnerEntity, partner => partner.clubs)
   @JoinTable()
-  socios: SocioEntity[];
+  partners: PartnerEntity[];
 }
