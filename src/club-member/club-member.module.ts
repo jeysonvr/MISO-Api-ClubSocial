@@ -5,9 +5,11 @@ import { ClubEntity } from '../club/club.entity';
 import { MemberEntity } from '../member/member.entity';
 
 import { ClubMemberService } from './club-member.service';
+import { ClubMemberController } from './club-member.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([ClubEntity, MemberEntity])],
-  providers: [ClubMemberService]
+  providers: [ClubMemberService],
+  controllers: [ClubMemberController]
 })
 export class ClubMemberModule { }
