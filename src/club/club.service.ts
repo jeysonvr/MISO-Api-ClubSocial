@@ -27,7 +27,7 @@ export class ClubService {
 
   async create(club: ClubEntity): Promise<ClubEntity> {
     if (club.description.length > 100) {
-      throw new BusinessLogicException("The description exceeds the max length which is 100", BusinessError.NOT_FOUND);
+      throw new BusinessLogicException("The description exceeds the max length which is 100", BusinessError.PRECONDITION_FAILED);
     }
 
     return await this.clubRepository.save(club);
@@ -35,7 +35,7 @@ export class ClubService {
 
   async update(id: string, club: ClubEntity): Promise<ClubEntity> {
     if (club.description.length > 100) {
-      throw new BusinessLogicException("The description exceeds the max length which is 100", BusinessError.NOT_FOUND);
+      throw new BusinessLogicException("The description exceeds the max length which is 100", BusinessError.PRECONDITION_FAILED);
     }
 
     const persistedClub: ClubEntity = await this.clubRepository.findOne({ where: { id } });

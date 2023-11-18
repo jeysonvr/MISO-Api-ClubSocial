@@ -27,14 +27,14 @@ export class MemberService {
 
   async create(member: MemberEntity): Promise<MemberEntity> {
     if (!member.email.includes('@')) {
-      throw new BusinessLogicException("The email is not valid", BusinessError.NOT_FOUND);
+      throw new BusinessLogicException("The email is not valid", BusinessError.PRECONDITION_FAILED);
     }
     return await this.memberRepository.save(member);
   }
 
   async update(id: string, member: MemberEntity): Promise<MemberEntity> {
     if (!member.email.includes('@')) {
-      throw new BusinessLogicException("The email is not valid", BusinessError.NOT_FOUND);
+      throw new BusinessLogicException("The email is not valid", BusinessError.PRECONDITION_FAILED);
     }
 
     const persistedMember: MemberEntity = await this.memberRepository.findOne({ where: { id } });
