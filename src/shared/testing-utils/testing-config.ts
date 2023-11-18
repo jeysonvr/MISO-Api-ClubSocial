@@ -1,16 +1,16 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { ClubEntity } from '../../club/club.entity';
-import { PartnerEntity } from '../../partner/partner.entity';
+import { MemberEntity } from '../../member/member.entity';
 
 export const TypeOrmTestingConfig = () => [
   TypeOrmModule.forRoot({
     type: 'sqlite',
     database: ':memory:',
     dropSchema: true,
-    entities: [PartnerEntity, ClubEntity],
+    entities: [MemberEntity, ClubEntity],
     synchronize: true,
     keepConnectionAlive: true
   }),
-  TypeOrmModule.forFeature([PartnerEntity, ClubEntity]),
+  TypeOrmModule.forFeature([MemberEntity, ClubEntity]),
 ];

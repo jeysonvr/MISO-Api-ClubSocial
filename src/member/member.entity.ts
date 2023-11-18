@@ -3,7 +3,7 @@ import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { ClubEntity } from '../club/club.entity';
 
 @Entity()
-export class PartnerEntity {
+export class MemberEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -16,6 +16,6 @@ export class PartnerEntity {
   @Column()
   birthdate: Date;
 
-  @ManyToMany(() => ClubEntity, club => club.partners)
+  @ManyToMany(() => ClubEntity, club => club.members)
   clubs?: ClubEntity[];
 }
