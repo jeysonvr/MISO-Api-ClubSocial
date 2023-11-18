@@ -77,6 +77,17 @@ describe('PartnerService', () => {
     expect(storedPartner.birthdate).toEqual(newPartner.birthdate)
   });
 
+  it('create should throw an exception for an invalid partner email', async () => {
+    const partner: PartnerEntity = {
+      id: "",
+      userName: faker.internet.userName(),
+      email: 'invalidEmail',
+      birthdate: faker.date.birthdate(),
+    }
+
+    await expect(() => service.create(partner)).rejects.toHaveProperty("message", "The email is not valid")
+  });
+
   it('update should modify a partner', async () => {
     const partner: PartnerEntity = partnersList[0];
     partner.userName = "NewUserName";
@@ -89,6 +100,15 @@ describe('PartnerService', () => {
     expect(storedPartner.userName).toEqual(partner.userName)
     expect(storedPartner.email).toEqual(partner.email)
     expect(storedPartner.birthdate).toEqual(partner.birthdate)
+  });
+
+  it('update should throw an exception for an invalid partner email', async () => {
+    const partner: PartnerEntity = partnersList[0];
+    partner.userName = faker.internet.userName();
+    partner.email = 'invalidEmail';
+    partner.birthdate = faker.date.birthdate();
+
+    await expect(() => service.update(partner.id, partner)).rejects.toHaveProperty("message", "The email is not valid")
   });
 
   it('delete should remove a partner', async () => {

@@ -29,7 +29,7 @@ describe('ClubService', () => {
     for (let i = 0; i < 5; i++) {
       const club: ClubEntity = await repository.save({
         name: faker.company.name(),
-        foundationDate: faker.date.birthdate(),
+        foundationDate: faker.date.past(),
         image: faker.lorem.slug(),
         description: faker.lorem.paragraphs().slice(0, 99),
       })
@@ -65,7 +65,7 @@ describe('ClubService', () => {
     const club: ClubEntity = {
       id: "",
       name: faker.company.name(),
-      foundationDate: faker.date.birthdate(),
+      foundationDate: faker.date.past(),
       image: faker.lorem.slug(),
       description: faker.lorem.paragraphs().slice(0, 99),
     }
@@ -79,6 +79,18 @@ describe('ClubService', () => {
     expect(storedClub.foundationDate).toEqual(newClub.foundationDate)
     expect(storedClub.image).toEqual(newClub.image)
     expect(storedClub.description).toEqual(newClub.description)
+  });
+
+  it('create should throw an exception for an invalid club description length', async () => {
+    const club: ClubEntity = {
+      id: "",
+      name: faker.company.name(),
+      foundationDate: faker.date.past(),
+      image: faker.lorem.slug(),
+      description: faker.lorem.sentence(120),
+    }
+
+    await expect(() => service.create(club)).rejects.toHaveProperty("message", "The description exceeds the max length which is 100")
   });
 
   it('update should modify a club', async () => {
@@ -95,6 +107,16 @@ describe('ClubService', () => {
     expect(storedClub.foundationDate).toEqual(club.foundationDate)
     expect(storedClub.image).toEqual(club.image)
     expect(storedClub.description).toEqual(club.description)
+  });
+
+  it('update should throw an exception for an invalid club description length', async () => {
+    const club: ClubEntity = clubsList[0];
+    club.name = "NewUserName";
+    club.foundationDate = new Date();
+    club.image = "NewImage";
+    club.description = faker.lorem.sentence(120);
+
+    await expect(() => service.update(club.id, club)).rejects.toHaveProperty("message", "The description exceeds the max length which is 100")
   });
 
   it('delete should remove a club', async () => {

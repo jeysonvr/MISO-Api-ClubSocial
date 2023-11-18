@@ -26,10 +26,17 @@ export class PartnerService {
   }
 
   async create(partner: PartnerEntity): Promise<PartnerEntity> {
+    if (!partner.email.includes('@')) {
+      throw new BusinessLogicException("The email is not valid", BusinessError.NOT_FOUND);
+    }
     return await this.partnerRepository.save(partner);
   }
 
   async update(id: string, partner: PartnerEntity): Promise<PartnerEntity> {
+    if (!partner.email.includes('@')) {
+      throw new BusinessLogicException("The email is not valid", BusinessError.NOT_FOUND);
+    }
+
     const persistedPartner: PartnerEntity = await this.partnerRepository.findOne({ where: { id } });
     if (!persistedPartner)
       throw new BusinessLogicException("The partner with the given id was not found", BusinessError.NOT_FOUND);
